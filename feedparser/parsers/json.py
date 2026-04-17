@@ -62,74 +62,15 @@ class JSONParser:
         self.entries = []
 
     def feed(self, file):
-        data = json.load(file)
-
-        v = data.get("version", "")
-        try:
-            self.version = self.VERSIONS[v]
-        except KeyError:
-            raise ValueError("Unrecognized JSONFeed version '%s'" % v)
-
-        for src, dst in self.FEED_FIELDS:
-            if src in data:
-                self.feeddata[dst] = data[src]
-        if "author" in data:
-            self.parse_author(data["author"], self.feeddata)
-        # TODO: hubs; expired has no RSS equivalent
-
-        self.entries = [self.parse_entry(e) for e in data["items"]]
+        pass
 
     def parse_entry(self, e):
-        entry = FeedParserDict()
-        for src, dst in self.ITEM_FIELDS:
-            if src in e:
-                entry[dst] = e[src]
-
-        if "content_text" in e:
-            entry["content"] = c = FeedParserDict()
-            c["value"] = e["content_text"]
-            c["type"] = "text"
-        elif "content_html" in e:
-            entry["content"] = c = FeedParserDict()
-            c["value"] = sanitize_html(
-                e["content_html"], self.encoding, "application/json"
-            )
-            c["type"] = "html"
-
-        if "date_published" in e:
-            entry["published"] = e["date_published"]
-            entry["published_parsed"] = _parse_date(e["date_published"])
-        if "date_updated" in e:
-            entry["updated"] = e["date_modified"]
-            entry["updated_parsed"] = _parse_date(e["date_modified"])
-
-        if "tags" in e:
-            entry["category"] = e["tags"]
-
-        if "author" in e:
-            self.parse_author(e["author"], entry)
-
-        if "attachments" in e:
-            entry["enclosures"] = [self.parse_attachment(a) for a in e["attachments"]]
-
-        return entry
+        pass
 
     @staticmethod
     def parse_author(parent, dest):
-        dest["author_detail"] = detail = FeedParserDict()
-        if "name" in parent:
-            dest["author"] = detail["name"] = parent["name"]
-        if "url" in parent:
-            if parent["url"].startswith("mailto:"):
-                detail["email"] = parent["url"][7:]
-            else:
-                detail["href"] = parent["url"]
+        pass
 
     @staticmethod
     def parse_attachment(attachment):
-        enc = FeedParserDict()
-        enc["href"] = attachment["url"]
-        enc["type"] = attachment["mime_type"]
-        if "size_in_bytes" in attachment:
-            enc["length"] = attachment["size_in_bytes"]
-        return enc
+        pass

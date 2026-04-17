@@ -47,28 +47,4 @@ ACCEPT_HEADER: str = (
 
 
 def get(url: str, result: dict[str, typing.Any]) -> bytes:
-    try:
-        response = requests.get(
-            url,
-            headers={"Accept": ACCEPT_HEADER},
-            timeout=10,
-        )
-    except requests.RequestException as exception:
-        result["bozo"] = True
-        result["bozo_exception"] = exception
-        return b""
-
-    # Lowercase the HTTP header keys for comparisons per RFC 2616.
-    result["headers"] = {k.lower(): v for k, v in response.headers.items()}
-
-    # save HTTP headers
-    if "etag" in result["headers"]:
-        result["etag"] = result["headers"]["etag"]
-    if "last-modified" in result["headers"]:
-        modified = result["headers"]["last-modified"]
-        if modified:
-            result["modified"] = modified
-            result["modified_parsed"] = _parse_date(modified)
-    result["href"] = response.url
-    result["status"] = response.status_code
-    return response.content
+    pass

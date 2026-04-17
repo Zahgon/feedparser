@@ -88,32 +88,12 @@ _urifixer = re.compile("^([A-Za-z][A-Za-z0-9+-.]*://)(/*)(.*?)")
 
 
 def _urljoin(base, uri):
-    uri = _urifixer.sub(r"\1\3", uri)
-    try:
-        uri = urllib.parse.urljoin(base, uri)
-    except ValueError:
-        uri = ""
-    return uri
+    pass
 
 
 def make_safe_absolute_uri(base, rel=None):
     # bail if ACCEPTABLE_URI_SCHEMES is empty
-    if not ACCEPTABLE_URI_SCHEMES:
-        return _urljoin(base, rel or "")
-    if not base:
-        return rel or ""
-    if not rel:
-        try:
-            scheme = urllib.parse.urlparse(base)[0]
-        except ValueError:
-            return ""
-        if not scheme or scheme in ACCEPTABLE_URI_SCHEMES:
-            return base
-        return ""
-    uri = _urljoin(base, rel)
-    if uri.strip().split(":", 1)[0] not in ACCEPTABLE_URI_SCHEMES:
-        return ""
-    return uri
+    pass
 
 
 class RelativeURIResolver(BaseHTMLProcessor):
@@ -154,21 +134,11 @@ class RelativeURIResolver(BaseHTMLProcessor):
         self.baseuri = baseuri
 
     def resolve_uri(self, uri):
-        return make_safe_absolute_uri(self.baseuri, uri.strip())
+        pass
 
     def unknown_starttag(self, tag, attrs):
-        attrs = self.normalize_attrs(attrs)
-        attrs = [
-            (
-                key,
-                ((tag, key) in self.relative_uris) and self.resolve_uri(value) or value,
-            )
-            for key, value in attrs
-        ]
-        super().unknown_starttag(tag, attrs)
+        pass
 
 
 def resolve_relative_uris(html_source, base_uri, encoding, type_):
-    p = RelativeURIResolver(base_uri, encoding, type_)
-    p.feed(html_source)
-    return p.output()
+    pass

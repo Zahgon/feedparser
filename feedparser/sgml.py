@@ -79,12 +79,7 @@ class _EndBracketRegEx:
         )
 
     def search(self, target, index=0):
-        match = self.endbracket.match(target, index)
-        if match is not None:
-            # Returning a new object in the calling thread's context
-            # resolves a thread-safety issue.
-            return EndBracketMatch(match)
-        return None
+        pass
 
 
 class EndBracketMatch:
@@ -92,7 +87,7 @@ class EndBracketMatch:
         self.match = match
 
     def start(self, n):
-        return self.match.end(n)
+        pass
 
 
 endbracket = _EndBracketRegEx()

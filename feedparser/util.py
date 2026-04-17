@@ -131,11 +131,7 @@ class FeedParserDict(dict):
         """
         :return: A :class:`FeedParserDict`.
         """
-
-        try:
-            return self.__getitem__(key, _stacklevel=3)
-        except KeyError:
-            return default
+        pass
 
     def __setitem__(self, key, value):
         key = self.keymap.get(key, key)

@@ -47,19 +47,7 @@ def registerDateHandler(func):
 
 def _parse_date(date_string):
     """Parses a variety of date formats into a 9-tuple in GMT"""
-    if not date_string:
-        return None
-    for handler in _date_handlers:
-        try:
-            date9tuple = handler(date_string)
-        except (KeyError, OverflowError, ValueError, AttributeError):
-            continue
-        if not date9tuple:
-            continue
-        if len(date9tuple) != 9:
-            continue
-        return date9tuple
-    return None
+    pass
 
 
 registerDateHandler(_parse_date_onblog)
